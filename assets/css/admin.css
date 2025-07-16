@@ -1,0 +1,101 @@
+/* contenedor general */
+* {
+    margin: 0;
+    padding: 0;
+    
+}
+
+.content {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+
+/* boton de regreso  */
+.btn {
+    margin: 0;
+    text-decoration: none;
+    position: absolute;
+    top: 15px;
+    left: 20px;
+}
+
+
+h1  {
+    color: #fdfcfe;
+    margin-top: 10px;
+    text-align: center;
+}
+h1 b {
+    color: #fed937;
+}
+
+
+/* estilos de listas */
+ul, li {
+    display: flex;
+    font-size: 30px;
+}
+ul {
+    gap: 20px;
+}
+
+
+/* botones de opciones */
+button {
+    background-color: #ffffff; /* Fondo blanco */
+    color: #60ad39; /* Texto verde para que combine con el fondo */
+    border: 3px solid #ffffff; /* Borde blanco */
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 5px 15px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 5px 0 #3e7c2c; /* Sombra inferior para simular profundidad */
+}
+button:hover {
+    background-color: #3e7c2c; /* Más oscuro al hacer hover */
+    color: #ffffff; /* Texto blanco */
+    transform: translateY(-5px); /* Salto hacia arriba */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+}
+button:active {
+    transform: translateY(1px); /* Al presionar vuelve a bajar un poco */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+
+/* imagen robot */
+img {
+    width: 300px;
+}
+
+
+@media (max-width: 1024px) {
+    .content {
+        height: auto;
+    }
+
+
+    .btn {
+        font-size: 10px;
+    }
+
+
+    h1 {
+        margin-top: 80px;
+    }
+
+
+    ul {
+        margin-top: 20px;
+    }
+    ul, li {
+        flex-direction: column;
+        align-items: center;
+    }
+}

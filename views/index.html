@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Asistencia - IESTP Cañete</title>
+    <meta name="description" content="Sistema de registro de asistencia mediante códigos QR para el Instituto de Educación Superior Tecnológico Público de Cañete">
+
+    <link rel="stylesheet" href="../assets/css/global.css">
+    <link rel="stylesheet" href="../assets/css/index.css">
+
+    <link rel="icon" type="image/png" href="../assets/img/logo iestp.png">
+</head>
+<body>
+    <a href="admin.html">
+        <button class="botom_admin">Administrador</button>
+    </a>
+
+    <!-- Logo del instituto -->
+    <img src="../assets/img/logo iestp.png" class="logo_iestp" alt="Logo IESTP Cañete">
+
+    <!-- Contenedor principal -->
+    <div class="main-container">
+        <h1>Sistema de Registro de Asistencia</h1>
+        
+        <!-- Contenedor del escáner -->
+        <div class="scanner-frame">
+            <div id="reader">
+                <!-- El video se insertará aquí dinámicamente -->
+            </div>
+            
+            <!-- Indicadores de esquina -->
+            <div class="scanner-corners">
+                <div class="corner top-left"></div>
+                <div class="corner top-right"></div>
+                <div class="corner bottom-left"></div>
+                <div class="corner bottom-right"></div>
+            </div>
+            
+            <!-- Indicador de estado de la cámara -->
+            <div class="camera-status"></div>
+        </div>
+
+        <!-- Resultado del escaneo -->
+        <div id="result">Esperando escaneo...</div>
+        
+        <!-- Instrucciones -->
+        <div class="instructions">
+            <p>📱 Coloca el código QR frente a la cámara</p>
+            <p>🎯 Asegúrate de que esté bien iluminado y enfocado</p>
+        </div>
+    </div>
+
+
+    <video id="video" style="display: none;" autoplay></video>
+    <canvas id="canvas" style="display: none;"></canvas>
+
+    <!-- Pantallazos de estado -->
+    <div class="pantallaso" id="pantallaso-correcto"></div>
+    <div class="pantallaso" id="pantallaso-ya-registrado"></div>
+    <div class="pantallaso" id="pantallaso-error"></div>
+
+    <!-- Audios de estado -->
+    <audio id="audio-exito" src="../assets/audio/Asistencia registrada.mp3" preload="auto"></audio>
+    <audio id="audio-ya-registrado" src="../assets/audio/asistencia ya registrada.mp3" preload="auto"></audio>
+    <audio id="audio-error" src="../assets/audio/codigo qr no valido.mp3" preload="auto"></audio>
+
+    <!-- Scripts -->
+    <script src="../assets/js/jsQR.js"></script>
+    <script src="../assets/js/index.js"></script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+/* contenedor de todos los alumnos */
+.content-tablas {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+/* opciones de filtrados */
+.filtrados {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+
+/* contenedor de tabla para mobiles */
+.content-alumno {
+    display: none;
+    width: 95%;
+}
+
+.secion-alumno {
+    display: grid;
+    grid-template-columns: 45px 1fr;
+    height: 30px;
+    padding: 10px 0;
+    overflow: hidden;
+    background: #fff;
+    border-radius: 15px;
+    margin-bottom: 10px;
+}
+.secion-alumno-active {
+    height: auto;
+}
+.content-boton {
+    display: flex;
+    justify-content: center;
+    height: 30px;
+}
+.content-boton i {
+    margin: auto;
+    color: #4ed802;    
+}
+.content-boton .arriba {
+    display: none;
+}
+.datos {
+    color: #000;
+    display: grid;
+    margin-right: 15px;
+    grid-template-rows: 30px;
+}
+.datos div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.content-opciones {
+    gap: 15px;
+}
+
+
+
+@media screen and (max-width: 1055px) {
+    .filtrados {
+        gap: 30px;
+    }
+
+
+    table {
+        display: none;
+    }
+
+    .content-alumno {
+        display: block;    
+    }
+    
+    
+}
+
+@media screen and (max-width: 1000px) {
+    .filtrados {
+        flex-direction: column;
+        gap: 10px;
+        width: 90%;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="number"],
+    select {
+        width: auto;
+    }
+}
+
+
+@media screen and (max-width: 650px) {
+    .content-boton {
+        height: 35px;    
+    }
+    .datos {
+        grid-template-rows: 35px;
+    }
+
+    .datos div {
+        font-size: 10px;
+    }
+    img {
+        width: 45px;
+    }
+}

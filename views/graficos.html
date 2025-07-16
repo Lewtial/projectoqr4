@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estadísticas y Gráficos - IESTP Cañete</title>
+    <meta name="description" content="Panel de estadísticas y análisis de asistencias del sistema de registro">
+    <link rel="stylesheet" href="../assets/css/global.css">
+    <link rel="stylesheet" href="../assets/css/graficos.css">
+    <link rel="icon" type="image/png" href="../assets/img/logo iestp.png">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Botón de toggle para móvil -->
+    <button class="toggle-button" onclick="toggleSidebar()">☰</button>
+
+    <!-- Sidebar de navegación -->
+    <div class="sidebar">  
+        <h2>📊 Estadísticas</h2>
+        <ul>
+            <li><a href="admin.html">🏠 Inicio</a></li>
+            <li><a href="#" onclick="mostrarSeccion('general')" class="active">📈 General</a></li>
+            <li>
+                <select onchange="filtrarPorEspecialidad(this.value)">
+                    <option value="" selected disabled>🎓 Especialidades</option>
+                    <option value="arquitectura">Arquitectura</option>
+                    <option value="enfermeria">Enfermería</option>
+                    <option value="agropecuaria">Agropecuaria</option>
+                    <option value="contabilidad">Contabilidad</option>
+                    <option value="electronica">Electrónica</option>
+                </select>
+            </li>
+            <li><a href="#" onclick="mostrarSeccion('asistencias')">📋 Asistencias</a></li>
+            <li><a href="#" onclick="mostrarSeccion('top10')">🏆 Top 10</a></li>
+            <li><a href="#" onclick="mostrarSeccion('alumnos')">👥 Alumnos</a></li>
+        </ul>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="content">
+
+        <!-- Sección General -->
+        <section id="general" class="section active">
+            <div class="section-content">
+                <!-- Estadísticas rápidas -->
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-value">379</span>
+                        <span class="stat-label">Total Alumnos</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">156</span>
+                        <span class="stat-label">Asistencias Hoy</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">78%</span>
+                        <span class="stat-label">Promedio Asistencia</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">5</span>
+                        <span class="stat-label">Especialidades</span>
+                    </div>
+                </div>
+
+                <!-- Tarjetas de información -->
+                <div class="cards-container">
+                    <div class="card">
+                        <h3>Total Alumnos</h3>
+                        <p><strong>379</strong></p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Especialidades</h3>
+                        <p>Arquitectura: 76</p>
+                        <p>Enfermería: 82</p>
+                        <p>Agropecuaria: 71</p>
+                        <p>Contabilidad: 78</p>
+                        <p>Electrónica: 72</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Ciclos</h3>
+                        <p>1er Año: 127</p>
+                        <p>2do Año: 126</p>
+                        <p>3er Año: 126</p>
+                    </div>
+                </div>
+
+                <!-- Gráficos principales -->
+                <div class="cards-container cards-70-30">
+                    <div class="card">
+                        <h3>Asistencias de la semana</h3>
+                        <canvas id="graficoSemana"></canvas>
+                    </div>
+
+                    <div class="card">
+                        <h3>Asistencias del día</h3>
+                        <canvas id="graficoCircular"></canvas>
+                    </div>
+                </div>
+
+                <div class="cards-container cards-30-70">
+                    <div class="card">
+                        <h3>Asistencias del año</h3>
+                        <canvas id="graficoAnual"></canvas>
+                    </div>
+
+                    <div class="card">
+                        <h3>Asistencias del mes</h3>
+                        <canvas id="graficoMensual"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="arquitectura" class="section">
+             <div class="section-content">
+    <!-- Filtros: Año y Ciclo -->
+    <div class="filter-row" style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+      <div>
+        <label for="añoArquitectura">Año:</label>
+        <select id="añoArquitectura" onchange="actualizarGraficosEspecialidad('arquitectura')"></select>
+      </div>
+      <div class="botones-ciclo">
+        <button onclick="cambiarCiclo('arquitectura', 'total')">Total</button>
+        <button onclick="cambiarCiclo('arquitectura', '1')">1er Año</button>
+        <button onclick="cambiarCiclo('arquitectura', '2')">2do Año</button>
+        <button onclick="cambiarCiclo('arquitectura', '3')">3er Año</button>
+      </div>
+    </div>
+
+    <!-- Gráficos -->
+    <div class="cards-container">
+      <div class="card">
+        <h3>Asistencias de la semana</h3>
+        <canvas id="graficoSemanaArquitectura"></canvas>
+      </div>
+    </div>
+
+    <div class="cards-container cards-30-70">
+      <div class="card">
+        <h3>Asistencias del año</h3>
+        <canvas id="graficoAnualArquitectura"></canvas>
+      </div>
+
+      <div class="card">
+        <h3>Asistencias del día</h3>
+        <canvas id="graficoDiaArquitectura"></canvas>
+      </div>
+    </div>
+  </div>
+        </section>
+
+        <section id="enfermeria" class="section">
+             <div class="section-content">
+    <!-- Filtros: Año y Ciclo -->
+    <div class="filter-row" style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+      <div>
+        <label for="añoEnfermeria">Año:</label>
+        <select id="añoEnfermeria" onchange="actualizarGraficosEspecialidad('enfermeria')"></select>
+      </div>
+      <div class="botones-ciclo">
+        <button onclick="cambiarCiclo('enfermeria', 'total')">Total</button>
+        <button onclick="cambiarCiclo('enfermeria', '1')">1er Año</button>
+        <button onclick="cambiarCiclo('enfermeria', '2')">2do Año</button>
+        <button onclick="cambiarCiclo('enfermeria', '3')">3er Año</button>
+      </div>
+    </div>
+
+    <!-- Gráficos -->
+    <div class="cards-container">
+      <div class="card">
+        <h3>Asistencias de la semana</h3>
+        <canvas id="graficoSemanaEnfermeria"></canvas>
+      </div>
+    </div>
+
+    <div class="cards-container cards-30-70">
+      <div class="card">
+        <h3>Asistencias del año</h3>
+        <canvas id="graficoAnualEnfermeria"></canvas>
+      </div>
+
+      <div class="card">
+        <h3>Asistencias del día</h3>
+        <canvas id="graficoDiaEnfermeria"></canvas>
+      </div>
+    </div>
+  </div>
+        </section>
+
+        <section id="agropecuaria" class="section">
+             <div class="section-content">
+    <!-- Filtros: Año y Ciclo -->
+    <div class="filter-row" style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+      <div>
+        <label for="añoAgropecuaria">Año:</label>
+        <select id="añoAgropecuaria" onchange="actualizarGraficosEspecialidad('agropecuaria')"></select>
+      </div>
+      <div class="botones-ciclo">
+        <button onclick="cambiarCiclo('agropecuaria', 'total')">Total</button>
+        <button onclick="cambiarCiclo('agropecuaria', '1')">1er Año</button>
+        <button onclick="cambiarCiclo('agropecuaria', '2')">2do Año</button>
+        <button onclick="cambiarCiclo('agropecuaria', '3')">3er Año</button>
+      </div>
+    </div>
+
+    <!-- Gráficos -->
+    <div class="cards-container">
+      <div class="card">
+        <h3>Asistencias de la semana</h3>
+        <canvas id="graficoSemanaAgropecuaria"></canvas>
+      </div>
+    </div>
+
+    <div class="cards-container cards-30-70">
+      <div class="card">
+        <h3>Asistencias del año</h3>
+        <canvas id="graficoAnualAgropecuaria"></canvas>
+      </div>
+
+      <div class="card">
+        <h3>Asistencias del día</h3>
+        <canvas id="graficoDiaAgropecuaria"></canvas>
+      </div>
+    </div>
+  </div>
+        </section>
+
+        <section id="contabilidad" class="section">
+             <div class="section-content">
+    <!-- Filtros: Año y Ciclo -->
+    <div class="filter-row" style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+      <div>
+        <label for="añoContabilidad">Año:</label>
+        <select id="añoContabilidad" onchange="actualizarGraficosEspecialidad('contabilidad')"></select>
+      </div>
+      <div class="botones-ciclo">
+        <button onclick="cambiarCiclo('contabilidad', 'total')">Total</button>
+        <button onclick="cambiarCiclo('contabilidad', '1')">1er Año</button>
+        <button onclick="cambiarCiclo('contabilidad', '2')">2do Año</button>
+        <button onclick="cambiarCiclo('contabilidad', '3')">3er Año</button>
+      </div>
+    </div>
+
+    <!-- Gráficos -->
+    <div class="cards-container">
+      <div class="card">
+        <h3>Asistencias de la semana</h3>
+        <canvas id="graficoSemanaContabilidad"></canvas>
+      </div>
+    </div>
+
+    <div class="cards-container cards-30-70">
+      <div class="card">
+        <h3>Asistencias del año</h3>
+        <canvas id="graficoAnualContabilidad"></canvas>
+      </div>
+
+      <div class="card">
+        <h3>Asistencias del día</h3>
+        <canvas id="graficoDiaContabilidad"></canvas>
+      </div>
+    </div>
+  </div>
+        </section>
+
+        <section id="electronica" class="section">
+             <div class="section-content">
+    <!-- Filtros: Año y Ciclo -->
+    <div class="filter-row" style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+      <div>
+        <label for="añoElectronica">Año:</label>
+        <select id="añoElectronica" onchange="actualizarGraficosEspecialidad('electronica')"></select>
+      </div>
+      <div class="botones-ciclo">
+        <button onclick="cambiarCiclo('electronica', 'total')">Total</button>
+        <button onclick="cambiarCiclo('electronica', '1')">1er Año</button>
+        <button onclick="cambiarCiclo('electronica', '2')">2do Año</button>
+        <button onclick="cambiarCiclo('electronica', '3')">3er Año</button>
+      </div>
+    </div>
+
+    <!-- Gráficos -->
+    <div class="cards-container">
+      <div class="card">
+        <h3>Asistencias de la semana</h3>
+        <canvas id="graficoSemanaElectronica"></canvas>
+      </div>
+    </div>
+
+    <div class="cards-container cards-30-70">
+      <div class="card">
+        <h3>Asistencias del año</h3>
+        <canvas id="graficoAnualElectronica"></canvas>
+      </div>
+
+      <div class="card">
+        <h3>Asistencias del día</h3>
+        <canvas id="graficoDiaElectronica"></canvas>
+      </div>
+    </div>
+  </div>
+        </section>
+
+
+
+        <!-- Sección Asistencias -->
+        <section id="asistencias" class="section">
+            <div class="section-content">
+                <!-- Filtros -->
+                <div class="filter-container">
+                    <h3>🔍 Filtros de Búsqueda</h3>
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label for="filtroEspecialidad">Especialidad</label>
+                            <select id="filtroEspecialidad" onchange="filtrar()">
+                                <option value="">Todas las especialidades</option>
+                                <option value="arquitectura">Arquitectura</option>
+                                <option value="enfermeria">Enfermería</option>
+                                <option value="agropecuaria">Agropecuaria</option>
+                                <option value="contabilidad">Contabilidad</option>
+                                <option value="electronica">Electrónica</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-group">
+                            <label for="filtroAño">Año</label>
+                            <input type="number" id="filtroAño" min="2020" max="2030" onchange="filtrar()">
+                        </div>
+
+                        <div class="filter-group">
+                            <label for="filtroMes">Mes</label>
+                            <input type="number" id="filtroMes" min="1" max="12" onchange="filtrar()">
+                        </div>
+
+                        <div class="filter-group">
+                            <label for="filtroDia">Día</label>
+                            <input type="number" id="filtroDia" min="1" max="31" onchange="filtrar()">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resumen de resultados -->
+                <div class="cards-container">
+                    <div class="card">
+                        <h3>Resumen de Asistencias</h3>
+                        <p id="totalEstudiantes" class="stat-value">Cargando...</p>
+                        <canvas id="asistenciaGraficoCircular"></canvas>
+                    </div>
+                </div>
+
+                <!-- Tabla de asistencias -->
+                <div class="card">
+                    <h3>Registro Detallado de Asistencias</h3>
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nombre</th>
+                                    <th>Especialidad</th>
+                                    <th>Ciclo</th>
+                                    <th>Hora</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablaAsistenciasBody">
+                                <tr>
+                                    <td colspan="6" class="loading">Cargando datos...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Top 10 -->
+        <section id="top10" class="section">
+    <div class="section-content">
+        <div class="card">
+           <h3 style="display: flex; justify-content: space-between; align-items: center;">
+    🏆 Top 10 Estudiantes con Mejor Asistencia
+    <select id="top10SelectorAnio" onchange="cambiarAnioTop10()" style="padding: 4px; border-radius: 6px;">
+        <!-- Se llenará por JS -->
+    </select>
+</h3>
+            <div class="top-list" id="top10Lista">
+                <!-- Se llenará desde JS -->
+            </div>
+        </div>
+    </div>
+</section>
+
+        <!-- Sección Alumnos -->
+        <section id="alumnos" class="section">
+            <div class="section-content">
+                <div class="loading">Cargando datos de alumnos...</div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Scripts -->
+    
+    <script src="../assets/js/chartjs/general/semana.js"></script>
+    <script src="../assets/js/chartjs/general/hoy.js"></script>
+    <script src="../assets/js/chartjs/general/año.js"></script>
+    <script src="../assets/js/chartjs/general/mes.js"></script>
+
+<script src="../assets/js/graficos.js"></script>
+
+        <script src="../assets/js/chartjs/top10.js"></script>
+
+    <script src="../assets/js/chartjs/asistencias/asistenciaFecha.js"></script>
+
+    <script>
+        // Función para filtrar por especialidad desde el select del sidebar
+        function filtrarPorEspecialidad(especialidad) {
+            // Cambiar a la sección de asistencias
+            mostrarSeccion(especialidad);
+            
+            // Establecer el filtro de especialidad
+            setTimeout(() => {
+                const filtroEspecialidad = document.getElementById('filtroEspecialidad');
+                if (filtroEspecialidad) {
+                    filtroEspecialidad.value = especialidad;
+                    filtrar();
+                }
+            }, 100);
+        }
+
+        // Configuración inicial cuando el DOM está listo
+        document.addEventListener("DOMContentLoaded", () => {
+            // Configurar fechas por defecto
+            const hoy = new Date();
+            const filtroAño = document.getElementById("filtroAño");
+            const filtroMes = document.getElementById("filtroMes");
+            const filtroDia = document.getElementById("filtroDia");
+            
+            if (filtroAño) filtroAño.value = hoy.getFullYear();
+            if (filtroMes) filtroMes.value = hoy.getMonth() + 1;
+            if (filtroDia) filtroDia.value = hoy.getDate();
+            
+            // Ejecutar filtrado inicial después de un breve delay
+            setTimeout(filtrar, 1000);
+        });
+
+        // Manejar redimensionamiento de ventana
+        window.addEventListener('resize', function() {
+            // Cerrar sidebar en móvil si se redimensiona a desktop
+            if (window.innerWidth > 768) {
+                const sidebar = document.querySelector('.sidebar');
+                const overlay = document.querySelector('.sidebar-overlay');
+                if (sidebar) sidebar.classList.remove('active');
+                if (overlay) overlay.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
